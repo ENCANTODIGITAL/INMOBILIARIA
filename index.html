@@ -18,13 +18,28 @@
             <div class="flex items-center space-x-2 cursor-pointer" onclick="switchPage('inicio')">
                 <span class="text-2xl font-black text-blue-900 tracking-wider">MAC <span class="text-amber-500">INMOBILIARIA</span></span>
             </div>
+            
+            <!-- Menú para escritorio -->
             <nav class="hidden md:flex space-x-8 font-medium">
                 <button onclick="switchPage('inicio')" id="nav-inicio" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1 transition">Inicio</button>
                 <button onclick="switchPage('nosotros')" id="nav-nosotros" class="text-gray-600 hover:text-blue-600 transition">Nosotros</button>
             </nav>
-            <div>
-                <button onclick="switchPage('nosotros'); scrollToSection('consultoria-section');" class="bg-blue-900 text-white px-5 py-2.5 rounded-full font-medium hover:bg-blue-800 transition shadow">Consultoría Gratis</button>
+
+            <div class="flex items-center space-x-3">
+                <button onclick="switchPage('nosotros'); scrollToSection('consultoria-section');" class="hidden sm:inline-block bg-blue-900 text-white px-5 py-2.5 rounded-full font-medium hover:bg-blue-800 transition shadow text-sm">Consultoría Gratis</button>
+                
+                <!-- Botón Menú Hamburguesa para Móvil -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-blue-900 focus:outline-none p-2">
+                    <i id="menu-icon" class="fa-solid fa-bars text-2xl"></i>
+                </button>
             </div>
+        </div>
+
+        <!-- Menú Desplegable Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-3 shadow-lg">
+            <button onclick="switchPage('inicio'); toggleMobileMenu();" id="nav-mobile-inicio" class="block w-full text-left py-2 font-semibold text-blue-600 border-b border-gray-100">Inicio</button>
+            <button onclick="switchPage('nosotros'); toggleMobileMenu();" id="nav-mobile-nosotros" class="block w-full text-left py-2 font-medium text-gray-700 border-b border-gray-100">Nosotros</button>
+            <button onclick="switchPage('nosotros'); scrollToSection('consultoria-section'); toggleMobileMenu();" class="w-full bg-blue-900 text-white py-2.5 rounded-xl font-medium hover:bg-blue-800 transition shadow text-center block mt-2">Consultoría Gratis</button>
         </div>
     </header>
 
@@ -96,7 +111,7 @@
 
         <!-- CATÁLOGO DE PROPIEDADES (14 INMUEBLES) -->
         <section class="max-w-7xl mx-auto px-4 py-16">
-            <div class="flex justify-between items-end mb-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-2">
                 <div>
                     <span class="text-blue-600 font-bold uppercase tracking-wider text-xs">Selección Exclusiva</span>
                     <h2 class="text-3xl font-black text-gray-900 mt-1">Nuestras Propiedades</h2>
@@ -106,7 +121,7 @@
 
             <div id="contenedor-propiedades" class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- PROPIEDAD 1 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Puente Piedra" data-precio="240000" onclick="abrirDetalle('prop1')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop1" data-operacion="venta" data-distrito="Puente Piedra" data-precio="240000" onclick="abrirDetalle('prop1')">
                     <div>
                         <div class="relative">
                             <img src="fotos/puentepiedra/puentepiedra.jpg" alt="Puente Piedra" class="w-full h-56 object-cover" loading="lazy">
@@ -128,7 +143,7 @@
                 </div>
 
                 <!-- PROPIEDAD 2 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Puente Piedra" data-precio="72000" onclick="abrirDetalle('prop2')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop2" data-operacion="venta" data-distrito="Puente Piedra" data-precio="72000" onclick="abrirDetalle('prop2')">
                     <div>
                         <div class="relative">
                             <img src="fotos/villaestela/villaestela.jpg" alt="Villa Estela" class="w-full h-56 object-cover" loading="lazy">
@@ -150,7 +165,7 @@
                 </div>
 
                 <!-- PROPIEDAD 3 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="San Martín de Porres" data-precio="229000" onclick="abrirDetalle('prop3')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop3" data-operacion="venta" data-distrito="San Martín de Porres" data-precio="229000" onclick="abrirDetalle('prop3')">
                     <div>
                         <div class="relative">
                             <img src="fotos/sanmartin-vicki/propiedadsanmartin.jpg" alt="San Martín de Porres" class="w-full h-56 object-cover" loading="lazy">
@@ -172,7 +187,7 @@
                 </div>
 
                 <!-- PROPIEDAD 4 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Puente Piedra" data-precio="482000" onclick="abrirDetalle('prop4')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop4" data-operacion="venta" data-distrito="Puente Piedra" data-precio="482000" onclick="abrirDetalle('prop4')">
                     <div>
                         <div class="relative">
                             <img src="fotos/pro/pro1.jpg" alt="Terreno Industrial" class="w-full h-56 object-cover" loading="lazy">
@@ -194,7 +209,7 @@
                 </div>
 
                 <!-- PROPIEDAD 5 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Ate" data-precio="80000" onclick="abrirDetalle('prop5')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop5" data-operacion="venta" data-distrito="Ate" data-precio="80000" onclick="abrirDetalle('prop5')">
                     <div>
                         <div class="relative">
                             <img src="fotos/molina-salamanca/1s.jpg" alt="Salamanca" class="w-full h-56 object-cover" loading="lazy">
@@ -216,7 +231,7 @@
                 </div>
 
                 <!-- PROPIEDAD 6 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Miraflores" data-precio="228000" onclick="abrirDetalle('prop6')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop6" data-operacion="venta" data-distrito="Miraflores" data-precio="228000" onclick="abrirDetalle('prop6')">
                     <div>
                         <div class="relative">
                             <img src="fotos/miraflores/1m.jpg" alt="Miraflores" class="w-full h-56 object-cover" loading="lazy">
@@ -238,7 +253,7 @@
                 </div>
 
                 <!-- PROPIEDAD 7 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Comas" data-precio="230000" onclick="abrirDetalle('prop7')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop7" data-operacion="venta" data-distrito="Comas" data-precio="230000" onclick="abrirDetalle('prop7')">
                     <div>
                         <div class="relative">
                             <img src="fotos/comas/comas.jpg" alt="Comas" class="w-full h-56 object-cover" loading="lazy">
@@ -260,7 +275,7 @@
                 </div>
 
                 <!-- PROPIEDAD 8 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Jesús María" data-precio="205000" onclick="abrirDetalle('prop8')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop8" data-operacion="venta" data-distrito="Jesús María" data-precio="205000" onclick="abrirDetalle('prop8')">
                     <div>
                         <div class="relative">
                             <img src="fotos/Jesus Maria/1.jpg" alt="Jesus Maria" class="w-full h-56 object-cover" loading="lazy">
@@ -282,7 +297,7 @@
                 </div>
 
                 <!-- PROPIEDAD 9 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="San Borja" data-precio="128000" onclick="abrirDetalle('prop9')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop9" data-operacion="venta" data-distrito="San Borja" data-precio="128000" onclick="abrirDetalle('prop9')">
                     <div>
                         <div class="relative">
                             <img src="fotos/sanborja/1.jpg" alt="San Borja" class="w-full h-56 object-cover" loading="lazy">
@@ -304,7 +319,7 @@
                 </div>
 
                 <!-- PROPIEDAD 10 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="San Isidro" data-precio="164000" onclick="abrirDetalle('prop10')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop10" data-operacion="venta" data-distrito="San Isidro" data-precio="164000" onclick="abrirDetalle('prop10')">
                     <div>
                         <div class="relative">
                             <img src="fotos/san-isidro/1.jpg" alt="San Isidro" class="w-full h-56 object-cover" loading="lazy">
@@ -326,7 +341,7 @@
                 </div>
 
                 <!-- PROPIEDAD 11 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Surquillo" data-precio="205000" onclick="abrirDetalle('prop11')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop11" data-operacion="venta" data-distrito="Surquillo" data-precio="205000" onclick="abrirDetalle('prop11')">
                     <div>
                         <div class="relative">
                             <img src="fotos/surquillo/1.jpg" alt="Surquillo" class="w-full h-56 object-cover" loading="lazy">
@@ -348,7 +363,7 @@
                 </div>
 
                 <!-- PROPIEDAD 12 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Cercado de Lima" data-precio="64000" onclick="abrirDetalle('prop12')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop12" data-operacion="venta" data-distrito="Cercado de Lima" data-precio="64000" onclick="abrirDetalle('prop12')">
                     <div>
                         <div class="relative">
                             <img src="fotos/cercadodelima/1.jpg" alt="Cercado de Lima" class="w-full h-56 object-cover" loading="lazy">
@@ -370,7 +385,7 @@
                 </div>
 
                 <!-- PROPIEDAD 13 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="San Juan de Lurigancho" data-precio="155000" onclick="abrirDetalle('prop13')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop13" data-operacion="venta" data-distrito="San Juan de Lurigancho" data-precio="155000" onclick="abrirDetalle('prop13')">
                     <div>
                         <div class="relative">
                             <img src="fotos/sjl/1.jpg" alt="San Juan de Lurigancho" class="w-full h-56 object-cover" loading="lazy">
@@ -392,7 +407,7 @@
                 </div>
 
                 <!-- PROPIEDAD 14 -->
-                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="San Martín de Porres" data-precio="83000" onclick="abrirDetalle('prop14')">
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-id="prop14" data-operacion="venta" data-distrito="San Martín de Porres" data-precio="83000" onclick="abrirDetalle('prop14')">
                     <div>
                         <div class="relative">
                             <img src="fotos/sanmartin/1.jpg" alt="San Martin" class="w-full h-56 object-cover" loading="lazy">
@@ -443,7 +458,7 @@
                     <div class="bg-blue-950/60 p-6 rounded-2xl border border-blue-800">
                         <div class="text-amber-400 text-3xl font-black mb-4">03</div>
                         <h3 class="text-xl font-bold mb-2">Encontramos al comprador</h3>
-                        <p class="text-gray-300 text-sm">Implementamos estrategias de marketing digital y nuestra red de contactos para hallar al cliente idóneo.</p>
+                        <p class="text-gray-300 text-sm">Implementamos estrategias de marketing digital y nossa red de contactos para hallar al cliente idóneo.</p>
                     </div>
                     <div class="bg-blue-950/60 p-6 rounded-2xl border border-blue-800">
                         <div class="text-amber-400 text-3xl font-black mb-4">04</div>
@@ -530,7 +545,6 @@
 
     <!-- ================= SECCIÓN NOSOTROS ================= -->
     <div id="section-nosotros" class="page-section">
-        
         <!-- 1. PRESENTACIÓN DE LA EMPRESA Y MISIÓN -->
         <section class="max-w-7xl mx-auto px-4 py-16">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -547,50 +561,6 @@
                 <div class="grid grid-cols-2 gap-4">
                     <img src="mac.jpeg" alt="Oficina" class="rounded-2xl shadow-lg w-full h-48 object-cover">
                     <img src="mano.jpeg" alt="Equipo" class="rounded-2xl shadow-lg w-full h-48 object-cover mt-8">
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. VIDEOS DE PRESENTACIÓN Y ÁREAS -->
-        <section class="bg-gray-900 text-white py-20 px-4">
-            <div class="max-w-7xl mx-auto text-center">
-                <span class="text-amber-400 font-bold uppercase tracking-wider text-xs">Multimedia</span>
-                <h2 class="text-3xl font-extrabold mt-2 mb-12">Videos de Presentación y Áreas de Trabajo</h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Video 1 -->
-                    <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-700">
-                        <div class="h-64 bg-black relative flex items-center justify-center">
-                            <img src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover opacity-50" alt="Video 1">
-                            <button onclick="reproducirVideo(1)" id="btn-play-1" class="absolute w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl shadow-lg hover:scale-110 transition">
-                                <i class="fa-solid fa-play ml-1"></i>
-                            </button>
-                            <div id="video-container-1" class="absolute inset-0 hidden">
-                                <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" title="Video Presentación" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                        <div class="p-6 text-left">
-                            <h3 class="font-bold text-lg mb-2">Conoce cómo trabajamos en MAC Inmobiliaria</h3>
-                            <p class="text-gray-400 text-sm">Explicación detallada de nuestros protocolos de seguridad legal y comercial para vender tu inmueble con éxito.</p>
-                        </div>
-                    </div>
-
-                    <!-- Video 2 -->
-                    <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-700">
-                        <div class="h-64 bg-black relative flex items-center justify-center">
-                            <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover opacity-50" alt="Video 2">
-                            <button onclick="reproducirVideo(2)" id="btn-play-2" class="absolute w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl shadow-lg hover:scale-110 transition">
-                                <i class="fa-solid fa-play ml-1"></i>
-                            </button>
-                            <div id="video-container-2" class="absolute inset-0 hidden">
-                                <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" title="Video Explicación" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                        <div class="p-6 text-left">
-                            <h3 class="font-bold text-lg mb-2">Nuestros especialistas en distritos de Lima</h3>
-                            <p class="text-gray-400 text-sm">Tour por las zonas de alta valorización donde operamos activamente conectando propietarios y compradores.</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -617,13 +587,6 @@
                                     <option value="+51">🇵🇪 +51 (Perú)</option>
                                     <option value="+1">🇺🇸 +1 (EE.UU.)</option>
                                     <option value="+34">🇪🇸 +34 (España)</option>
-                                    <option value="+54">🇦🇷 +54 (Argentina)</option>
-                                    <option value="+56">🇨🇱 +56 (Chile)</option>
-                                    <option value="+57">🇨🇴 +57 (Colombia)</option>
-                                    <option value="+52">🇲🇽 +52 (México)</option>
-                                    <option value="+593">🇪🇨 +593 (Ecuador)</option>
-                                    <option value="+55">🇧🇷 +55 (Brasil)</option>
-                                    <option value="otro">🌍 Otro país</option>
                                 </select>
                                 <input type="tel" id="consTel" required placeholder="987654321" oninput="validarSoloNumeros(this)" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none">
                             </div>
@@ -631,104 +594,27 @@
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Cuéntanos tu caso</label>
-                        <textarea rows="4" id="consCaso" required placeholder="Describe brevemente qué necesitas (comprar, vender, asesoría legal...)" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none"></textarea>
+                        <textarea rows="4" id="consCaso" required placeholder="Describe brevemente qué necesitas..." class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none"></textarea>
                     </div>
                     <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-lg hover:bg-blue-700 transition shadow">Solicitar Consultoría Gratis</button>
                 </form>
                 <div id="alertaConsultoria" class="hidden mt-4 p-4 bg-emerald-100 text-emerald-800 rounded-lg text-center font-medium"></div>
             </div>
         </section>
+    </div>
 
-        <!-- 4. ESPACIO PARA VENDER PROPIEDADES -->
-        <section class="bg-blue-900 py-20 px-4 text-white">
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-blue-950 p-10 rounded-3xl shadow-2xl border border-blue-800">
-                    <div class="text-center mb-8">
-                        <span class="bg-amber-500 text-blue-950 font-bold text-xs px-3 py-1 rounded-full uppercase">Propietarios</span>
-                        <h2 class="text-3xl font-black mt-2">Quiero Vender mi Propiedad</h2>
-                        <p class="text-gray-300 text-sm mt-1">Completa los datos de tu inmueble para iniciar la evaluación comercial.</p>
-                    </div>
+    <!-- ================= MODAL DE DETALLE DE PROPIEDAD ================= -->
+    <div id="modal-detalle" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative animate-fade-in">
+            <!-- Botón cerrar modal -->
+            <button onclick="cerrarDetalle()" class="absolute top-4 right-4 z-10 bg-gray-900/70 hover:bg-gray-900 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
 
-                    <form onsubmit="enviarVenta(event)" class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-300 mb-2">Apellidos <span class="text-xs font-normal text-gray-400">(Solo letras)</span></label>
-                                <input type="text" id="vendeApellido" required placeholder="Tus apellidos" oninput="validarSoloLetras(this)" class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-300 mb-2">Número de Teléfono / Celular <span class="text-xs font-normal text-gray-400">(Solo números)</span></label>
-                                <div class="flex space-x-2">
-                                    <select id="vendePais" class="bg-blue-900 border border-blue-700 text-white rounded-lg p-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-amber-500">
-                                        <option value="+51">🇵🇪 +51 (Perú)</option>
-                                        <option value="+1">🇺🇸 +1 (EE.UU.)</option>
-                                        <option value="+34">🇪🇸 +34 (España)</option>
-                                        <option value="+54">🇦🇷 +54 (Argentina)</option>
-                                        <option value="+56">🇨🇱 +56 (Chile)</option>
-                                        <option value="+57">🇨🇴 +57 (Colombia)</option>
-                                        <option value="+52">🇲🇽 +52 (México)</option>
-                                        <option value="+593">🇪🇨 +593 (Ecuador)</option>
-                                        <option value="+55">🇧🇷 +55 (Brasil)</option>
-                                        <option value="otro">🌍 Otro país</option>
-                                    </select>
-                                    <input type="tel" id="vendeTel" required placeholder="987654321" oninput="validarSoloNumeros(this)" class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-300 mb-2">Distrito de Lima</label>
-                                <select id="vendeDistrito" class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none">
-                                    <option value="Miraflores">Miraflores</option>
-                                    <option value="San Isidro">San Isidro</option>
-                                    <option value="San Borja">San Borja</option>
-                                    <option value="La Molina">La Molina</option>
-                                    <option value="Santiago de Surco">Santiago de Surco</option>
-                                    <option value="Barranco">Barranco</option>
-                                    <option value="Jesús María">Jesús María</option>
-                                    <option value="Lince">Lince</option>
-                                    <option value="Magdalena del Mar">Magdalena del Mar</option>
-                                    <option value="San Miguel">San Miguel</option>
-                                    <option value="Surquillo">Surquillo</option>
-                                    <option value="Pueblo Libre">Pueblo Libre</option>
-                                    <option value="Cercado de Lima">Cercado de Lima</option>
-                                    <option value="San Martín de Porres">San Martín de Porres</option>
-                                    <option value="Los Olivos">Los Olivos</option>
-                                    <option value="Puente Piedra">Puente Piedra</option>
-                                    <option value="Comas">Comas</option>
-                                    <option value="Ate">Ate</option>
-                                    <option value="La Victoria">La Victoria</option>
-                                    <option value="San Luis">San Luis</option>
-                                    <option value="Otros">Otros (Fuera de estos distritos)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-300 mb-2">¿En qué piso se encuentra?</label>
-                                <input type="text" id="vendePiso" placeholder="Ej. Piso 4 (o Casa / Terreno)" class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-300 mb-2">Tipo de Inmueble</label>
-                                <select id="vendeTipo" class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none">
-                                    <option value="Departamento">Departamento</option>
-                                    <option value="Casa">Casa</option>
-                                    <option value="Terreno">Terreno</option>
-                                    <option value="Local / Oficina">Local / Oficina</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-bold text-gray-300 mb-2">Cuéntanos un poco sobre la propiedad</label>
-                            <textarea rows="4" id="vendeDetalle" required placeholder="Antigüedad, número de habitaciones, estado de saneamiento, características destacadas..." class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none"></textarea>
-                        </div>
-
-                        <button type="submit" class="w-full bg-amber-500 text-blue-950 font-black py-3.5 rounded-lg hover:bg-amber-400 transition shadow-lg">Enviar Datos de mi Propiedad</button>
-                    </form>
-                    <div id="alertaVenta" class="hidden mt-4 p-4 bg-emerald-800 text-white rounded-lg text-center font-medium"></div>
-                </div>
+            <div id="modal-contenido" class="p-6 md:p-8">
+                <!-- Se inyecta dinámicamente con JavaScript -->
             </div>
-        </section>
-
+        </div>
     </div>
 
     <!-- PIE DE PÁGINA COMÚN -->
@@ -738,13 +624,13 @@
                 <span class="text-xl font-black text-white tracking-wider">MAC <span class="text-amber-500">INMOBILIARIA</span></span>
                 <p class="text-gray-400 text-sm mt-4">Inmobiliaria profesional en Lima con corredores expertos en ventas y alquileres.</p>
                 <div class="flex space-x-3 mt-4">
-                    <a href="https://www.instagram.com/mac.agencia.inmobiliaria?utm_source=ig_web_button_share_sheet&cplk=ZDNlZDc0MzIxNw==" target="_blank" class="w-10 h-10 bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 rounded-full flex items-center justify-center hover:opacity-90 transition shadow" title="Instagram">
+                    <a href="https://www.instagram.com/mac.agencia.inmobiliaria" target="_blank" class="w-10 h-10 bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 rounded-full flex items-center justify-center hover:opacity-90 transition shadow">
                         <i class="fa-brands fa-instagram text-white text-base"></i>
                     </a>
-                   <a href="https://www.tiktok.com/@mac.agencia.inmobiliaria?is_from_webapp=1&sender_device=pc" target="_blank" class="w-10 h-10 bg-black border border-gray-700 rounded-full flex items-center justify-center hover:bg-gray-900 transition shadow" title="TikTok">
+                   <a href="https://www.tiktok.com/@mac.agencia.inmobiliaria" target="_blank" class="w-10 h-10 bg-black border border-gray-700 rounded-full flex items-center justify-center hover:bg-gray-900 transition shadow">
                         <i class="fa-brands fa-tiktok text-white text-base"></i>
                     </a>
-                    <a href="https://www.facebook.com/profile.php?id=61580779925332&locale=es_LA" target="_blank" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-500 transition shadow" title="Facebook">
+                    <a href="https://www.facebook.com" target="_blank" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-500 transition shadow">
                         <i class="fa-brands fa-facebook-f text-white text-base"></i>
                     </a>
                 </div>
@@ -779,11 +665,180 @@
         </div>
     </footer>
 
-    <!-- LÓGICA INTERACTIVA CON PAGINACIÓN DE 6 EN 6 -->
+    <!-- LÓGICA INTERACTIVA CON MODAL DE DETALLE TIPO REMAX / DONDEVASAVIVIR -->
     <script>
+        // BASE DE DATOS DE INFORMACIÓN DETALLADA PARA CADA PROPIEDAD
+        const baseDatosPropiedades = {
+            'prop1': {
+                titulo: "Edificio de 5 Pisos: Local Comercial + 4 Dptos.",
+                distrito: "Puente Piedra",
+                precio: "$ 240,000",
+                tipoOperacion: "En Venta",
+                imagen: "fotos/puentepiedra/puentepiedra.jpg",
+                area: "120 m²",
+                caracteristicas: ["5 Pisos construidos", "Todos los pisos independizados en Registros Públicos", "Local comercial en 1er nivel", "Ideal para inversionistas de renta múltiple"],
+                descripcion: "Excelente edificio ubicado estratégicamente en Puente Piedra. Consta de un local comercial a pie de calle de alto tránsito y 4 departamentos totalmente independientes con servicios básicos separados. Excelente rentabilidad mensual garantizada.",
+                whatsapp: "51987654321"
+            },
+            'prop2': {
+                titulo: "Inmueble Amplio - Zona Accesible (Villa Estela)",
+                distrito: "Puente Piedra",
+                precio: "$ 72,000",
+                tipoOperacion: "Oportunidad",
+                imagen: "fotos/villaestela/villaestela.jpg",
+                area: "160 m²",
+                caracteristicas: ["4 Ambientes en material noble", "4 Ambientes prefabricados adicionales", "Cerca de avenidas principales", "Documentos en regla"],
+                descripcion: "Propiedad con gran potencial de ampliación ubicada en la zona de Villa Estela, Puente Piedra. Espacios versátiles listos para remodelar o construir proyecto multifamiliar.",
+                whatsapp: "51987654321"
+            },
+            'prop3': {
+                titulo: "Bellísima Casa Multifamiliar | Amplia y Elegante",
+                distrito: "San Martín de Porres",
+                precio: "$ 229,000",
+                tipoOperacion: "Disponible",
+                imagen: "fotos/sanmartin-vicki/propiedadsanmartin.jpg",
+                area: "180 m² aprox.",
+                caracteristicas: ["Documentación 100% saneada", "Trato directo y seguro", "Ambientes iluminados", "Acabados de primera"],
+                descripcion: "Hermosa casa multifamiliar en San Martín de Porres. Diseñada para familias numerosas o para generar ingresos por alquiler de departamentos independientes. Zona sumamente tranquila y segura.",
+                whatsapp: "51987654321"
+            },
+            'prop4': {
+                titulo: "Terreno Industrial de 877 m² en Puente Piedra",
+                distrito: "Puente Piedra",
+                precio: "$ 482,000",
+                tipoOperacion: "En Venta",
+                imagen: "fotos/pro/pro1.jpg",
+                area: "877.19 m²",
+                caracteristicas: ["Zonificación Industrial (I1 / I2)", "A 1 min de Comisaría La Ensenada", "Fácil acceso para camiones de carga pesada", "Linderos regulares"],
+                descripcion: "Amplio terreno industrial con excelente ubicación logística en Puente Piedra. Perfecto para almacenes, talleres, plantas de producción o centros de distribución.",
+                whatsapp: "51987654321"
+            },
+            'prop5': {
+                titulo: "Departamento Remodelado en Salamanca (4.º Piso)",
+                distrito: "Ate / Salamanca",
+                precio: "S/ 290,000",
+                tipoOperacion: "Remodelado",
+                imagen: "fotos/molina-salamanca/1s.jpg",
+                area: "85 m²",
+                caracteristicas: ["3 Dormitorios amplios", "2 Baños completos", "Balcón con vista externa y excelente iluminación", "Cerca de parques y vías rápidas de acceso"],
+                descripcion: "Lindo departamento completamente remodelado en cuarto piso en la residencial zona de Salamanca. Acabados modernos en cocina y baños, listo para mudarse.",
+                whatsapp: "51987654321"
+            },
+            'prop6': {
+                titulo: "Exclusivo Triplex en Calle Schell – Miraflores",
+                distrito: "Miraflores",
+                precio: "$ 228,000",
+                tipoOperacion: "En Venta",
+                imagen: "fotos/miraflores/1m.jpg",
+                area: "117 m²",
+                caracteristicas: ["3 Dormitorios + Estudio", "Jacuzzi privado en mármol", "Terraza panorámica exclusiva", "A pasos del Malecón y centro de Miraflores"],
+                descripcion: "Espectacular triplex de categoría en plena Calle Schell, Miraflores. Cuenta con amplias zonas sociales, acabados de lujo, jacuzzi y terraza ideal para reuniones.",
+                whatsapp: "51987654321"
+            },
+            'prop7': {
+                titulo: "Oportunidad de Inversión Frente a Parque",
+                distrito: "Comas",
+                precio: "$ 230,000",
+                tipoOperacion: "Disponible",
+                imagen: "fotos/comas/comas.jpg",
+                area: "Terreno: 190 m² | Constr: 510 m²",
+                caracteristicas: ["Frente a parque principal", "Cerca a Av. Túpac Amaru y Belaunde", "Edificación sólida de varios niveles", "Alta rentabilidad comercial"],
+                descripcion: "Gran inmueble con excelente ubicación frente a parque en Comas. Ideal para instituciones, negocios o familias que buscan amplitud y conectividad con avenidas principales.",
+                whatsapp: "51987654321"
+            },
+            'prop8': {
+                titulo: "Exclusivo Departamento - Av. Olavegoya",
+                distrito: "Jesús María",
+                precio: "$ 205,000",
+                tipoOperacion: "Disponible",
+                imagen: "fotos/Jesus Maria/1.jpg",
+                area: "89.69 m²",
+                caracteristicas: ["3 Dormitorios", "2 Baños completos", "Incluye 2 cocheras lineales + depósito", "Seguridad 24/7"],
+                descripcion: "Moderno departamento en la codiciada Av. Olavegoya, Jesús María. Ubicación céntrica cerca de centros comerciales, colegios, universidades y parques.",
+                whatsapp: "51987654321"
+            },
+            'prop9': {
+                titulo: "¡Vive en San Borja! Lindo Dpto. de 87 m²",
+                distrito: "San Borja",
+                precio: "$ 128,000",
+                tipoOperacion: "Disponible",
+                imagen: "fotos/sanborja/1.jpg",
+                area: "87 m²",
+                caracteristicas: ["3 Habitaciones", "5.º Piso con ascensor", "1 Baño completamente remodelado", "Zona residencial muy segura y arbolada"],
+                descripcion: "Encantador departamento en San Borja, rodeado de parques y zonas exclusivas. Excelente distribución interna, iluminación natural y cercanía a centros comerciales.",
+                whatsapp: "51987654321"
+            },
+            'prop10': {
+                titulo: "Exclusivo Departamento en San Isidro",
+                distrito: "San Isidro",
+                precio: "$ 164,000",
+                tipoOperacion: "Disponible",
+                imagen: "fotos/san-isidro/1.jpg",
+                area: "90 m² aprox.",
+                caracteristicas: ["Ubicación financiera y residencial top", "Cerca de parques y cafés exclusivos", "Seguridad permanente", "Alta valorización"],
+                descripcion: "Prestigioso departamento en el corazón de San Isidro. Diseñado con altos estándares de confort, acabados elegantes y accesibilidad inmediata a las principales vías.",
+                whatsapp: "51987654321"
+            },
+            'prop11': {
+                titulo: "Amplio Dpto. 1.er Piso Frente a Parque",
+                distrito: "Surquillo",
+                precio: "$ 205,000",
+                tipoOperacion: "En Venta",
+                imagen: "fotos/surquillo/1.jpg",
+                area: "138.81 m²",
+                caracteristicas: ["Incluye Estacionamiento propio", "Gas Natural Cálidda instalado", "Frente a hermoso parque arbolado", "Límite directo con Miraflores"],
+                descripcion: "Amplio departamento en primer piso ubicado en zona residencial exclusiva de Surquillo, colindante con Miraflores. Cuenta con instalación de gas natural y espacios generosos.",
+                whatsapp: "51987654321"
+            },
+            'prop12': {
+                titulo: "Dpto. de 64 m² en Av. Argentina (Frente a Ferreiros)",
+                distrito: "Cercado de Lima",
+                precio: "$ 64,000",
+                tipoOperacion: "Oportunidad",
+                imagen: "fotos/cercadodelima/1.jpg",
+                area: "64 m²",
+                caracteristicas: ["3.er Piso con vista externa", "Sala, comedor y 2 baños completos", "Precio de ocasión imperdible", "Excelente conectividad metropolitana"],
+                descripcion: "Funcional y cómodo departamento en Av. Argentina, Cercado de Lima. Ideal para parejas jóvenes o como inversión para alquiler rápido por su ubicación estratégica.",
+                whatsapp: "51987654321"
+            },
+            'prop13': {
+                titulo: "Dpto. 1.er Piso en Condominio Smart – Mangomarca",
+                distrito: "San Juan de Lurigancho",
+                precio: "$ 155,000",
+                tipoOperacion: "En Venta",
+                imagen: "fotos/sjl/1.jpg",
+                area: "166 m²",
+                caracteristicas: ["Patio amplio privado + Cochera", "3 Habitaciones + 2 baños", "Condominio seguro con áreas comunes", "Mangomarca"],
+                descripcion: "Magnífico departamento en primer piso dentro de exclusivo condominio en Mangomarca, San Juan de Lurigancho. Disfruta de un gran patio privado y total seguridad.",
+                whatsapp: "51987654321"
+            },
+            'prop14': {
+                titulo: "Amplio Dúplex (Cerca a UNI y Cayetano)",
+                distrito: "San Martín de Porres",
+                precio: "$ 83,000",
+                tipoOperacion: "En Venta",
+                imagen: "fotos/sanmartin/1.jpg",
+                area: "145 m²",
+                caracteristicas: ["Ubicado en Pisos 5 y 6 con Terraza", "4 Dormitorios amplios", "3 Baños completos", "Cercano a universidades UNI y Cayetano Heredia"],
+                descripcion: "Excelente dúplex luminoso en San Martín de Porres. Cuenta con amplia terraza privada, distribución ideal para familias universitarias o profesionales.",
+                whatsapp: "51987654321"
+            }
+        };
+
         let paginaActual = 1;
         const porPagina = 6;
         let tarjetasFiltradas = [];
+
+        function toggleMobileMenu() {
+            let menu = document.getElementById('mobile-menu');
+            let icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            if(menu.classList.contains('hidden')) {
+                icon.className = "fa-solid fa-bars text-2xl";
+            } else {
+                icon.className = "fa-solid fa-xmark text-2xl";
+            }
+        }
 
         function switchPage(pageId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
@@ -792,9 +847,13 @@
             if(pageId === 'inicio') {
                 document.getElementById('nav-inicio').className = "text-blue-600 font-semibold border-b-2 border-blue-600 pb-1 transition";
                 document.getElementById('nav-nosotros').className = "text-gray-600 hover:text-blue-600 transition";
+                document.getElementById('nav-mobile-inicio').className = "block w-full text-left py-2 font-semibold text-blue-600 border-b border-gray-100";
+                document.getElementById('nav-mobile-nosotros').className = "block w-full text-left py-2 font-medium text-gray-700 border-b border-gray-100";
             } else {
                 document.getElementById('nav-nosotros').className = "text-blue-600 font-semibold border-b-2 border-blue-600 pb-1 transition";
                 document.getElementById('nav-inicio').className = "text-gray-600 hover:text-blue-600 transition";
+                document.getElementById('nav-mobile-nosotros').className = "block w-full text-left py-2 font-semibold text-blue-600 border-b border-gray-100";
+                document.getElementById('nav-mobile-inicio').className = "block w-full text-left py-2 font-medium text-gray-700 border-b border-gray-100";
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -875,8 +934,6 @@
 
                 renderizarPaginacion();
             }
-
-            document.getElementById('contenedor-propiedades').scrollIntoView({ behavior: 'smooth' });
         }
 
         function renderizarPaginacion() {
@@ -903,13 +960,68 @@
             }
         }
 
+        // ABRIR VENTANA MODAL DETALLADA TIPO REMAX / DONDEVASAVIVIR
         function abrirDetalle(propId) {
-            alert("Abriendo detalles y galería completa de: " + propId);
+            let p = baseDatosPropiedades[propId];
+            if(!p) return;
+
+            let modalContenido = document.getElementById('modal-contenido');
+            let mensajeWp = encodeURIComponent(`Hola, estoy interesado en la propiedad: "${p.titulo}" ubicada en ${p.distrito} (${p.precio}). Me gustaría agendar una visita o recibir más información.`);
+
+            modalContenido.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <div class="relative rounded-2xl overflow-hidden shadow-lg h-72">
+                            <img src="${p.imagen}" alt="${p.titulo}" class="w-full h-full object-cover">
+                            <span class="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">${p.tipoOperacion}</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-between space-y-4">
+                        <div>
+                            <span class="text-xs text-blue-600 font-bold uppercase tracking-wider">${p.distrito}</span>
+                            <h2 class="text-2xl font-black text-gray-900 mt-1 mb-2">${p.titulo}</h2>
+                            <div class="text-3xl font-black text-blue-900 mb-4">${p.precio}</div>
+                            
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 mb-4 space-y-2">
+                                <p class="text-sm font-semibold text-gray-700"><i class="fa-solid fa-ruler-combined text-blue-600 mr-2"></i> Área: ${p.area}</p>
+                                <p class="text-sm text-gray-600"><i class="fa-solid fa-file-shield text-emerald-600 mr-2"></i> Saneamiento legal verificado por MAC Inmobiliaria</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <a href="https://wa.me/${p.whatsapp}?text=${mensajeWp}" target="_blank" class="w-full bg-emerald-600 text-white font-bold py-3.5 px-6 rounded-xl hover:bg-emerald-700 transition flex items-center justify-center space-x-2 shadow-lg">
+                                <i class="fa-brands fa-whatsapp text-xl"></i>
+                                <span>Contactar Asesor por WhatsApp</span>
+                            </a>
+                            <button onclick="cerrarDetalle()" class="w-full bg-gray-200 text-gray-700 font-bold py-2.5 rounded-xl hover:bg-gray-300 transition">
+                                Seguir viendo propiedades
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 border-t border-gray-200 pt-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">Descripción General</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">${p.descripcion}</p>
+
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">Características Principales</h3>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600">
+                        ${p.caracteristicas.map(c => `<li class="flex items-center"><i class="fa-solid fa-check text-blue-600 mr-2"></i> ${c}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            let modal = document.getElementById('modal-detalle');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
         }
 
-        function reproducirVideo(num) {
-            document.getElementById('btn-play-' + num).classList.add('hidden');
-            document.getElementById('video-container-' + num).classList.remove('hidden');
+        function cerrarDetalle() {
+            let modal = document.getElementById('modal-detalle');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
         }
 
         function enviarConsultoria(e) {
@@ -919,17 +1031,6 @@
 
             let alerta = document.getElementById('alertaConsultoria');
             alerta.innerText = "¡Estimado(a) " + apellido + ", su consultoría gratuita ha sido registrada! Lo contactaremos al " + tel + " pronto.";
-            alerta.classList.remove('hidden');
-            e.target.reset();
-        }
-
-        function enviarVenta(e) {
-            e.preventDefault();
-            let apellido = document.getElementById('vendeApellido').value;
-            let tel = document.getElementById('vendeTel').value;
-
-            let alerta = document.getElementById('alertaVenta');
-            alerta.innerText = "¡Gracias " + apellido + "! Los datos de su propiedad han sido enviados con éxito. Nos comunicaremos al " + tel + ".";
             alerta.classList.remove('hidden');
             e.target.reset();
         }
