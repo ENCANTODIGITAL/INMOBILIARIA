@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAX Inmobiliaria | Compra, Venta y Alquiler en Lima</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+<!-- BARRA DE NAVEGACIÓN -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="switchPage('inicio')">
+                <span class="text-2xl font-black text-blue-900 tracking-wider">MAX <span class="text-amber-500">INMOBILIARIA</span></span>
+            </div>
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <button onclick="switchPage('inicio')" id="nav-inicio" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1 transition">Inicio</button>
+                <button onclick="switchPage('nosotros')" id="nav-nosotros" class="text-gray-600 hover:text-blue-600 transition">Nosotros</button>
+            </nav>
+            <div>
+                <button onclick="switchPage('nosotros'); scrollToSection('consultoria-section');" class="bg-blue-900 text-white px-5 py-2.5 rounded-full font-medium hover:bg-blue-800 transition shadow">Consultoría Gratis</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= SECCIÓN INICIO ================= -->
+    <div id="section-inicio" class="page-section active">
+        <!-- HERO Y BUSCADOR CON VIDEO Y FILTRO AZUL AJUSTABLE -->
+        <section class="relative text-white py-24 px-4 overflow-hidden">
+            
+            <!-- VIDEO DE FONDO -->
+            <div class="absolute inset-0 z-0 overflow-hidden">
+                <video autoplay muted loop playsinline class="w-full h-full object-cover" style="opacity: 0.85;">
+                    <source src="video.mp4" type="video/mp4">
+                    Tu navegador no soporta videos HTML5.
+                </video>
+                
+                <!-- 
+                  CAPA DE FILTRO AZUL ENCIMA DEL VIDEO:
+                  - Cambia el valor final '85' (por ejemplo a 60, 40 o 20) para controlar qué tan azul o qué tan colorido/cercano al video original se ve.
+                  - Mientras más BAJO sea el número (ej. /30), menos capa azul habrá y más se verán los colores reales del video.
+                  - Mientras más ALTO sea el número (ej. /85), más predominará el filtro azul institucional.
+                -->
+                <div class="absolute inset-0 bg-blue-950/60"></div>
+            </div>
+
+            <!-- CONTENIDO DEL HERO Y BUSCADOR -->
+            <div class="max-w-5xl mx-auto text-center relative z-10">
+                <span class="bg-amber-500 text-blue-950 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Expertos Inmobiliarios en Lima</span>
+                <h1 class="text-4xl md:text-5xl font-extrabold mt-4 mb-6 leading-tight">Encuentra el hogar o inversión ideal en Lima</h1>
+                <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">Propiedades exclusivas con el respaldo de asesores expertos y seguridad jurídica garantizada.</p>
+                
+                <!-- BUSCADOR DE PROPIEDADES -->
+                <div class="bg-white p-6 rounded-2xl shadow-2xl text-gray-800 grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Tipo de Operación</label>
+                        <select id="filtroOperacion" class="w-full bg-gray-100 border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none">
+                            <option value="todos">Todos (Venta y Alquiler)</option>
+                            <option value="venta">Venta</option>
+                            <option value="alquiler">Alquiler</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Ubicación (Distrito)</label>
+                        <select id="filtroDistrito" class="w-full bg-gray-100 border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none">
+                            <option value="todos">Todos los distritos</option>
+                            <option value="Puente Piedra">Puente Piedra</option>
+                            <option value="San Martín de Porres">San Martín de Porres</option>
+                            <option value="Ate">Ate / Salamanca</option>
+                            <option value="Miraflores">Miraflores</option>
+                            <option value="Comas">Comas</option>
+                            <option value="Jesús María">Jesús María</option>
+                            <option value="San Borja">San Borja</option>
+                            <option value="San Isidro">San Isidro</option>
+                            <option value="Surquillo">Surquillo</option>
+                            <option value="Cercado de Lima">Cercado de Lima</option>
+                            <option value="San Juan de Lurigancho">San Juan de Lurigancho</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Precio Máximo ($ USD / S/)</label>
+                        <select id="filtroPrecio" class="w-full bg-gray-100 border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none">
+                            <option value="999999">Cualquier Precio</option>
+                            <option value="70000">Hasta $70,000</option>
+                            <option value="150000">Hasta $150,000</option>
+                            <option value="300000">Hasta $300,000</option>
+                            <option value="600000">Más de $300,000</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-3 mt-2">
+                        <button onclick="ejecutarBusqueda()" class="w-full bg-blue-600 text-white py-3.5 rounded-lg font-bold hover:bg-blue-700 transition flex items-center justify-center space-x-2 shadow-lg">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>Buscar Propiedades Disponibles</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+        <!-- CATÁLOGO DE PROPIEDADES (14 INMUEBLES) -->
+        <section class="max-w-7xl mx-auto px-4 py-16">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <span class="text-blue-600 font-bold uppercase tracking-wider text-xs">Selección Exclusiva</span>
+                    <h2 class="text-3xl font-black text-gray-900 mt-1">Nuestras Propiedades</h2>
+                </div>
+                <span class="text-gray-500 text-sm">Mostrando el catálogo completo (14 Inmuebles)</span>
+            </div>
+
+            <div id="contenedor-propiedades" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- PROPIEDAD 1 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Puente Piedra" data-precio="240000" onclick="abrirDetalle('prop1')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/puentepiedra/puentepiedra.jpg" alt="Puente Piedra" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">En Venta</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 240,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">Puente Piedra</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Edificio de 5 Pisos: Local Comercial + 4 Dptos.</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-ruler-combined text-blue-500 mr-1"></i> Área: 120 m²</li>
+                                <li><i class="fa-solid fa-building text-blue-500 mr-1"></i> 5 Pisos | Todos independizados</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 2 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Puente Piedra" data-precio="72000" onclick="abrirDetalle('prop2')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/villaestela/villaestela.jpg" alt="Villa Estela" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full">Oportunidad</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 72,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">Puente Piedra</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Inmueble Amplio - Zona Accesible (Villa Estela)</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-ruler-combined text-blue-500 mr-1"></i> Área Total: 160 m²</li>
+                                <li><i class="fa-solid fa-house text-blue-500 mr-1"></i> 4 Ambientes Nobles + 4 Prefabricados</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 3 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="San Martín de Porres" data-precio="229000" onclick="abrirDetalle('prop3')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/sanmartin-vicki/propiedadsanmartin.jpg" alt="San Martín de Porres" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">Disponible</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 229,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">San Martín de Porres</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Bellísima Casa Multifamiliar | Amplia y Elegante</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-file-contract text-blue-500 mr-1"></i> Documentación saneada en regla</li>
+                                <li><i class="fa-solid fa-user-check text-blue-500 mr-1"></i> Trato directo con el propietario</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 4 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Puente Piedra" data-precio="482000" onclick="abrirDetalle('prop4')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/pro/pro1.jpg" alt="Terreno Industrial" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">En Venta</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 482,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">Puente Piedra</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Terreno Industrial de 877 m² en Puente Piedra</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-ruler-combined text-blue-500 mr-1"></i> 877.19 m² | Zonificación Industrial</li>
+                                <li><i class="fa-solid fa-location-dot text-blue-500 mr-1"></i> A 1 min de Comisaría La Ensenada</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 5 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Ate" data-precio="80000" onclick="abrirDetalle('prop5')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/molina-salamanca/1s.jpg" alt="Salamanca" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">Remodelado</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">S/ 290,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">Ate / Salamanca</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Departamento Remodelado en Salamanca (4.º Piso)</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-bed text-blue-500 mr-1"></i> 3 hab + 2 baños</li>
+                                <li><i class="fa-solid fa-sun text-blue-500 mr-1"></i> Balcón y vista externa</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 6 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Miraflores" data-precio="228000" onclick="abrirDetalle('prop6')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/miraflores/1m.jpg" alt="Miraflores" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">En Venta</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 228,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">Miraflores</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Exclusivo Triplex en Calle Schell – Miraflores</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-ruler-combined text-blue-500 mr-1"></i> 117 m² | 3 dormitorios + Estudio</li>
+                                <li><i class="fa-solid fa-hot-tub-person text-blue-500 mr-1"></i> Jacuzzi en mármol + Terraza</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 7 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Comas" data-precio="230000" onclick="abrirDetalle('prop7')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/comas/comas.jpg" alt="Comas" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">Disponible</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 230,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">Comas</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Oportunidad de Inversión Frente a Parque</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-ruler-combined text-blue-500 mr-1"></i> Terreno: 190 m² | Construido: 510 m²</li>
+                                <li><i class="fa-solid fa-road text-blue-500 mr-1"></i> Cerca a Av. Túpac Amaru y Belaunde</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 8 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Jesús María" data-precio="205000" onclick="abrirDetalle('prop8')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/Jesus Maria/1.jpg" alt="Jesus Maria" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">Disponible</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 205,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">Jesús María</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Exclusivo Departamento - Av. Olavegoya</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-ruler-combined text-blue-500 mr-1"></i> 89.69 m² | 3 Dormitorios + 2 baños</li>
+                                <li><i class="fa-solid fa-car text-blue-500 mr-1"></i> Incluye 2 cocheras + depósito</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 9 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="San Borja" data-precio="128000" onclick="abrirDetalle('prop9')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/sanborja/1.jpg" alt="San Borja" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">Disponible</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 128,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">San Borja</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">¡Vive en San Borja! Lindo Dpto. de 87 m²</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-bed text-blue-500 mr-1"></i> 3 dormitorios | 5.º Piso</li>
+                                <li><i class="fa-solid fa-bath text-blue-500 mr-1"></i> 1 baño remodelado</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 10 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="San Isidro" data-precio="164000" onclick="abrirDetalle('prop10')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/san-isidro/1.jpg" alt="San Isidro" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">Disponible</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 164,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">San Isidro</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Exclusivo Departamento en San Isidro</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-location-dot text-blue-500 mr-1"></i> Ubicación privilegiada</li>
+                                <li><i class="fa-solid fa-tree text-blue-500 mr-1"></i> Cerca de parques y zonas comerciales</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 11 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Surquillo" data-precio="205000" onclick="abrirDetalle('prop11')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/surquillo/1.jpg" alt="Surquillo" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">En Venta</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 205,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">Surquillo (Límite con Miraflores)</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Amplio Dpto. 1.er Piso Frente a Parque</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-ruler-combined text-blue-500 mr-1"></i> 138.81 m² | Incluye Estacionamiento</li>
+                                <li><i class="fa-solid fa-fire-flame-curved text-blue-500 mr-1"></i> Gas Natural Cálidda instalado</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 12 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="Cercado de Lima" data-precio="64000" onclick="abrirDetalle('prop12')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/cercadodelima/1.jpg" alt="Cercado de Lima" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full">Oportunidad</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 64,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">Cercado de Lima</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Dpto. de 64 m² en Av. Argentina (Frente a Ferreiros)</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-ruler-combined text-blue-500 mr-1"></i> 64 m² | 3.er Piso con vista externa</li>
+                                <li><i class="fa-solid fa-door-open text-blue-500 mr-1"></i> Sala, comedor y 2 baños</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 13 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="San Juan de Lurigancho" data-precio="155000" onclick="abrirDetalle('prop13')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/sjl/1.jpg" alt="San Juan de Lurigancho" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">En Venta</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 155,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">San Juan de Lurigancho</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Dpto. 1.er Piso en Condominio Smart – Mangomarca</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-ruler-combined text-blue-500 mr-1"></i> 166 m² | Patio amplio + Cochera</li>
+                                <li><i class="fa-solid fa-bed text-blue-500 mr-1"></i> 3 Habitaciones + 2 baños</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+                <!-- PROPIEDAD 14 -->
+                <div class="propiedad-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-gray-100 cursor-pointer flex flex-col justify-between" data-operacion="venta" data-distrito="San Martín de Porres" data-precio="83000" onclick="abrirDetalle('prop14')">
+                    <div>
+                        <div class="relative">
+                            <img src="fotos/sanmartin/1.jpg" alt="San Martin" class="w-full h-56 object-cover" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">En Venta</span>
+                            <span class="absolute bottom-3 right-3 bg-gray-900/80 text-white text-sm font-bold px-3 py-1 rounded-lg backdrop-blur-sm">$ 83,000</span>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-xs text-blue-600 font-bold uppercase mb-1">San Martín de Porres</p>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">Amplio Dúplex (Cerca a UNI y Cayetano)</h3>
+                            <ul class="text-gray-500 text-sm space-y-1 mb-4">
+                                <li><i class="fa-solid fa-ruler-combined text-blue-500 mr-1"></i> 145 m² (Pisos 5 y 6) + Terraza</li>
+                                <li><i class="fa-solid fa-bed text-blue-500 mr-1"></i> 4 dormitorios + 3 baños</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold hover:bg-blue-700 transition">Ver fotos y detalles</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- BOTONES DE PAGINACIÓN -->
+            <div id="paginacion-container" class="flex justify-center items-center space-x-2 mt-12">
+                <!-- Se genera dinámicamente mediante JavaScript -->
+            </div>
+
+            <!-- Aviso si no hay resultados -->
+            <div id="no-resultados" class="hidden text-center py-12 text-gray-500 font-medium">
+                No se encontraron propiedades con los filtros seleccionados. ¡Contáctanos para ayudarte a buscar!
+            </div>
+        </section>
+
+        <!-- CÓMO TRABAJAMOS -->
+        <section class="bg-blue-900 text-white py-20 px-4">
+            <div class="max-w-7xl mx-auto text-center">
+                <span class="text-amber-400 font-bold uppercase tracking-wider text-xs">Proceso Transparente y Seguro</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold mt-2 mb-12">¿Cómo trabajamos con tu propiedad?</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-left">
+                    <div class="bg-blue-950/60 p-6 rounded-2xl border border-blue-800">
+                        <div class="text-amber-400 text-3xl font-black mb-4">01</div>
+                        <h3 class="text-xl font-bold mb-2">Nos das tu propiedad</h3>
+                        <p class="text-gray-300 text-sm">Nos contactas y confiamos en ti para gestionar la venta o alquiler de tu inmueble con total profesionalismo.</p>
+                    </div>
+                    <div class="bg-blue-950/60 p-6 rounded-2xl border border-blue-800">
+                        <div class="text-amber-400 text-3xl font-black mb-4">02</div>
+                        <h3 class="text-xl font-bold mb-2">Revisamos documentos</h3>
+                        <p class="text-gray-300 text-sm">Validamos que toda la documentación (títulos, PU, HR, SUNARP) esté en perfecto orden legal.</p>
+                    </div>
+                    <div class="bg-blue-950/60 p-6 rounded-2xl border border-blue-800">
+                        <div class="text-amber-400 text-3xl font-black mb-4">03</div>
+                        <h3 class="text-xl font-bold mb-2">Encontramos al comprador</h3>
+                        <p class="text-gray-300 text-sm">Implementamos estrategias de marketing digital y nuestra red de contactos para hallar al cliente idóneo.</p>
+                    </div>
+                    <div class="bg-blue-950/60 p-6 rounded-2xl border border-blue-800">
+                        <div class="text-amber-400 text-3xl font-black mb-4">04</div>
+                        <h3 class="text-xl font-bold mb-2">Firma y transacción</h3>
+                        <p class="text-gray-300 text-sm">Alistamos todos los papeles notariales para que tú solo tengas que firmar y completar la transacción sin estrés.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIMULADOR DE HIPOTECA -->
+        <section class="max-w-5xl mx-auto px-4 py-20">
+            <div class="text-center mb-12">
+                <span class="text-blue-600 font-bold uppercase tracking-wider text-xs">Herramienta Financiera</span>
+                <h2 class="text-3xl font-black text-gray-900 mt-1">Simulador de Crédito Hipotecario</h2>
+                <p class="text-gray-600 mt-2">Calcula tu cuota mensual estimada con tasas estándar del sistema bancario peruano (TEA aprox. 9.5%).</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Valor del Inmueble ($ USD)</label>
+                        <input type="number" id="montoInmueble" value="150000" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-lg font-semibold focus:ring-2 focus:ring-blue-600 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Cuota Inicial (%)</label>
+                        <input type="number" id="cuotaInicial" value="20" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-lg font-semibold focus:ring-2 focus:ring-blue-600 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Plazo del Crédito</label>
+                        <select id="plazoAnios" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-lg font-semibold focus:ring-2 focus:ring-blue-600 outline-none">
+                            <option value="10">10 Años (120 meses)</option>
+                            <option value="15">15 Años (180 meses)</option>
+                            <option value="20" selected>20 Años (240 meses)</option>
+                        </select>
+                    </div>
+                    <button onclick="calcularHipoteca()" class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-lg hover:bg-blue-700 transition shadow">Calcular Cuota</button>
+                </div>
+
+                <div class="bg-blue-900 text-white p-8 rounded-2xl text-center flex flex-col justify-center space-y-6">
+                    <h3 class="text-xl font-medium text-amber-400">Cuota Mensual Estimada</h3>
+                    <div class="text-4xl lg:text-5xl font-black" id="resultadoCuota">$ 1,120.50</div>
+                    <p class="text-xs text-gray-300">Cálculo basado en una tasa referencial anual (TEA) de 9.5%. Incluye seguros de desgravamen estándar.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PREGUNTAS FRECUENTES -->
+        <section class="bg-gray-100 py-20 px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="text-blue-600 font-bold uppercase tracking-wider text-xs">Resolvemos Tus Dudas</span>
+                    <h2 class="text-3xl font-black text-gray-900 mt-1">Preguntas Frecuentes</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <details class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 group">
+                        <summary class="font-bold text-lg text-gray-900 cursor-pointer flex justify-between items-center">
+                            ¿Qué comisión cobra MAX Inmobiliaria por la venta?
+                            <i class="fa-solid fa-chevron-down text-blue-600 group-open:rotate-180 transition"></i>
+                        </summary>
+                        <p class="text-gray-600 mt-3 text-sm leading-relaxed">Nuestra comisión estándar de corretaje en Lima es competitiva (entre 3% y 5% del valor de venta), cubriendo marketing avanzado, filtrado de compradores y asesoría legal completa.</p>
+                    </details>
+
+                    <details class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 group">
+                        <summary class="font-bold text-lg text-gray-900 cursor-pointer flex justify-between items-center">
+                            ¿Cuánto tiempo toma vender una propiedad en Lima?
+                            <i class="fa-solid fa-chevron-down text-blue-600 group-open:rotate-180 transition"></i>
+                        </summary>
+                        <p class="text-gray-600 mt-3 text-sm leading-relaxed">Con nuestra estrategia omnicanal y tasación precisa, el promedio de cierre en los distritos principales de Lima oscila entre 45 y 90 días.</p>
+                    </details>
+
+                    <details class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 group">
+                        <summary class="font-bold text-lg text-gray-900 cursor-pointer flex justify-between items-center">
+                            ¿Qué documentos necesito para poner mi propiedad en venta?
+                            <i class="fa-solid fa-chevron-down text-blue-600 group-open:rotate-180 transition"></i>
+                        </summary>
+                        <p class="text-gray-600 mt-3 text-sm leading-relaxed">Principalmente Copia Literal de SUNARP actualizada, DNI del propietario y recibos de impuesto predial (PU y HR). Nosotros verificamos todo el expediente contigo.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    - ================= SECCIÓN NOSOTROS ================= -->
+    <div id="section-nosotros" class="page-section">
+        
+        <!-- 1. INFO EMPRESA Y MISIÓN (Encabezado y Presentación) -->
+        <section class="max-w-7xl mx-auto px-4 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div>
+                <span class="text-blue-600 font-bold uppercase tracking-wider text-xs">Compromiso y Solidez</span>
+                <h1 class="text-4xl font-black text-gray-900 mt-2 mb-6">Conoce MAX Inmobiliaria</h1>
+                <p class="text-gray-600 leading-relaxed mb-4">Somos una empresa inmobiliaria peruana conformada por profesionales especializados en corretaje, asesoría jurídica inmobiliaria y marketing digital. Operamos en los principales distritos de Lima con la misión de brindar seguridad, confianza y rentabilidad.</p>
+                <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg mb-6">
+                  <h3 class="font-bold text-blue-900 mb-1">Nuestra Misión</h3>
+                  <p class="text-sm text-gray-700">Facilitar y asegurar transacciones inmobiliarias exitosas, acompañando a propietarios y compradores desde el primer contacto hasta la firma en notaría con absoluta seriedad.</p>
+                </div>
+                <p class="text-sm text-gray-500 flex items-center"><i class="fa-solid fa-location-dot text-amber-500 mr-2 text-lg"></i> Oficina Principal: Av. Larco 680, Miraflores, Lima - Perú.</p>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80" alt="Oficina" class="rounded-2xl shadow-lg w-full h-48 object-cover">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="Equipo" class="rounded-2xl shadow-lg w-full h-48 object-cover mt-8">
+              </div>
+            </div>
+        </section>
+
+        <!-- 2. VIDEOS DE PRESENTACIÓN Y ÁREAS (Multimedia dinámica en el centro) -->
+        <section class="bg-gray-900 text-white py-20 px-4">
+            <div class="max-w-7xl mx-auto text-center">
+                <span class="text-amber-400 font-bold uppercase tracking-wider text-xs">Multimedia</span>
+                <h2 class="text-3xl font-extrabold mt-2 mb-12">Videos de Presentación y Áreas de Trabajo</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Video 1 -->
+                    <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-700">
+                        <div class="h-64 bg-black relative flex items-center justify-center">
+                            <img src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover opacity-50" alt="Video 1">
+                            <button onclick="reproducirVideo(1)" id="btn-play-1" class="absolute w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl shadow-lg hover:scale-110 transition">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </button>
+                            <div id="video-container-1" class="absolute inset-0 hidden">
+                                <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" title="Video Presentación" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="p-6 text-left">
+                            <h3 class="font-bold text-lg mb-2">Conoce cómo trabajamos en MAX Inmobiliaria</h3>
+                            <p class="text-gray-400 text-sm">Explicación detallada de nuestros protocolos de seguridad legal y comercial para vender tu inmueble con éxito.</p>
+                        </div>
+                    </div>
+
+                    <!-- Video 2 -->
+                    <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-700">
+                        <div class="h-64 bg-black relative flex items-center justify-center">
+                            <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover opacity-50" alt="Video 2">
+                            <button onclick="reproducirVideo(2)" id="btn-play-2" class="absolute w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl shadow-lg hover:scale-110 transition">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </button>
+                            <div id="video-container-2" class="absolute inset-0 hidden">
+                                <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" title="Video Explicación" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="p-6 text-left">
+                            <h3 class="font-bold text-lg mb-2">Nuestros especialistas en distritos de Lima</h3>
+                            <p class="text-gray-400 text-sm">Tour por las zonas de alta valorización donde operamos activamente conectando propietarios y compradores.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. FORMULARIO: QUIERO VENDER MI PROPIEDAD (Destacado para propietarios) -->
+        <section class="bg-blue-900 py-20 px-4 text-white">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-blue-950 p-10 rounded-3xl shadow-2xl border border-blue-800">
+                    <div class="text-center mb-8">
+                        <span class="bg-amber-500 text-blue-950 font-bold text-xs px-3 py-1 rounded-full uppercase">Propietarios</span>
+                        <h2 class="text-3xl font-black mt-2">Quiero Vender mi Propiedad</h2>
+                        <p class="text-gray-300 text-sm mt-1">Completa los datos de tu inmueble para iniciar la evaluación comercial.</p>
+                    </div>
+
+                    <form onsubmit="enviarVenta(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-300 mb-2">Apellidos <span class="text-xs font-normal text-gray-400">(Solo letras)</span></label>
+                                <input type="text" id="vendeApellido" required placeholder="Tus apellidos" oninput="validarSoloLetras(this)" class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-300 mb-2">Número de Teléfono / Celular <span class="text-xs font-normal text-gray-400">(Solo números)</span></label>
+                                <div class="flex space-x-2">
+                                    <select id="vendePais" class="bg-blue-900 border border-blue-700 text-white rounded-lg p-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-amber-500">
+                                        <option value="+51">🇵🇪 +51 (Perú)</option>
+                                        <option value="+1">🇺🇸 +1 (EE.UU.)</option>
+                                        <option value="+34">🇪🇸 +34 (España)</option>
+                                        <option value="+54">🇦🇷 +54 (Argentina)</option>
+                                        <option value="+56">🇨🇱 +56 (Chile)</option>
+                                        <option value="+57">🇨🇴 +57 (Colombia)</option>
+                                        <option value="+52">🇲🇽 +52 (México)</option>
+                                        <option value="+593">🇪🇨 +593 (Ecuador)</option>
+                                        <option value="+55">🇧🇷 +55 (Brasil)</option>
+                                        <option value="otro">🌍 Otro país</option>
+                                    </select>
+                                    <input type="tel" id="vendeTel" required placeholder="987654321" oninput="validarSoloNumeros(this)" class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-300 mb-2">Distrito de Lima</label>
+                                <select id="vendeDistrito" class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none">
+                                    <option value="Miraflores">Miraflores</option>
+                                    <option value="San Isidro">San Isidro</option>
+                                    <option value="San Borja">San Borja</option>
+                                    <option value="La Molina">La Molina</option>
+                                    <option value="Santiago de Surco">Santiago de Surco</option>
+                                    <option value="Barranco">Barranco</option>
+                                    <option value="Jesús María">Jesús María</option>
+                                    <option value="Lince">Lince</option>
+                                    <option value="Magdalena del Mar">Magdalena del Mar</option>
+                                    <option value="San Miguel">San Miguel</option>
+                                    <option value="Surquillo">Surquillo</option>
+                                    <option value="Pueblo Libre">Pueblo Libre</option>
+                                    <option value="Cercado de Lima">Cercado de Lima</option>
+                                    <option value="San Martín de Porres">San Martín de Porres</option>
+                                    <option value="Los Olivos">Los Olivos</option>
+                                    <option value="Puente Piedra">Puente Piedra</option>
+                                    <option value="Comas">Comas</option>
+                                    <option value="Ate">Ate</option>
+                                    <option value="La Victoria">La Victoria</option>
+                                    <option value="San Luis">San Luis</option>
+                                    <option value="Otros">Otros (Fuera de estos distritos)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-300 mb-2">¿En qué piso se encuentra?</label>
+                                <input type="text" id="vendePiso" placeholder="Ej. Piso 4 (o Casa / Terreno)" class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-300 mb-2">Tipo de Inmueble</label>
+                                <select id="vendeTipo" class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none">
+                                    <option value="Departamento">Departamento</option>
+                                    <option value="Casa">Casa</option>
+                                    <option value="Terreno">Terreno</option>
+                                    <option value="Local / Oficina">Local / Oficina</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-300 mb-2">Cuéntanos un poco sobre la propiedad</label>
+                            <textarea rows="4" id="vendeDetalle" required placeholder="Antigüedad, número de habitaciones, estado de saneamiento, características destacadas..." class="w-full bg-blue-900 border border-blue-700 rounded-lg p-3 text-sm text-white focus:ring-2 focus:ring-amber-500 outline-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-amber-500 text-blue-950 font-black py-3.5 rounded-lg hover:bg-amber-400 transition shadow-lg">Enviar Datos de mi Propiedad</button>
+                    </form>
+                    <div id="alertaVenta" class="hidden mt-4 p-4 bg-emerald-800 text-white rounded-lg text-center font-medium"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. FORMULARIO: CONSULTORÍA GRATIS (Cierre de la página con asesoría general) -->
+        <section id="consultoria-section" class="max-w-4xl mx-auto px-4 py-20">
+            <div class="bg-white p-10 rounded-3xl shadow-xl border border-gray-200">
+                <div class="text-center mb-8">
+                    <span class="bg-blue-100 text-blue-700 font-bold text-xs px-3 py-1 rounded-full uppercase">Asesoría Profesional</span>
+                    <h2 class="text-3xl font-black text-gray-900 mt-2">Pide tu consultoría gratis</h2>
+                    <p class="text-gray-600 text-sm mt-1">Déjanos tus datos y un asesor experto se comunicará contigo a la brevedad.</p>
+                </div>
+
+                <form onsubmit="enviarConsultoria(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Apellidos <span class="text-xs font-normal text-gray-500">(Solo letras)</span></label>
+                            <input type="text" id="consApellido" required placeholder="Tus apellidos" oninput="validarSoloLetras(this)" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Número de Teléfono / Celular <span class="text-xs font-normal text-gray-500">(Solo números)</span></label>
+                            <div class="flex space-x-2">
+                              <select id="consPais" class="bg-gray-100 border border-gray-300 rounded-lg p-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-blue-600">
+                                  <option value="+51">🇵🇪 +51 (Perú)</option>
+                                  <option value="+1">🇺🇸 +1 (EE.UU.)</option>
+                                  <option value="+34">🇪🇸 +34 (España)</option>
+                                  <option value="+54">🇦🇷 +54 (Argentina)</option>
+                                  <option value="+56">🇨🇱 +56 (Chile)</option>
+                                  <option value="+57">🇨🇴 +57 (Colombia)</option>
+                                  <option value="+52">🇲🇽 +52 (México)</option>
+                                  <option value="+593">🇪🇨 +593 (Ecuador)</option>
+                                  <option value="+55">🇧🇷 +55 (Brasil)</option>
+                                  <option value="otro">🌍 Otro país</option>
+                            </select>
+                            <input type="tel" id="consTel" required placeholder="987654321" oninput="validarSoloNumeros(this)" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none">
+                          </div>
+                        </div>
+                  </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Cuéntanos tu caso</label>
+                    <textarea rows="4" id="consCaso" required placeholder="Describe brevemente qué necesitas (comprar, vender, asesoría legal...)" class="w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-lg hover:bg-blue-700 transition shadow">Solicitar Consultoría Gratis</button>
+              </form>
+              <div id="alertaConsultoria" class="hidden mt-4 p-4 bg-emerald-100 text-emerald-800 rounded-lg text-center font-medium"></div>
+          </div>
+        </section>
+
+    </div>
+
+   <!-- PIE DE PÁGINA COMÚN CON INSTAGRAM, WHATSAPP Y FACEBOOK -->
+    <footer class="bg-blue-950 text-white py-14 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+            <div>
+                <span class="text-xl font-black text-white tracking-wider">MAX <span class="text-amber-500">INMOBILIARIA</span></span>
+                <p class="text-gray-400 text-sm mt-4">Inmobiliaria profesional en Lima con corredores expertos en ventas y alquileres.</p>
+                <div class="flex space-x-3 mt-4">
+                    <a href="https://www.instagram.com/mac.agencia.inmobiliaria?utm_source=ig_web_button_share_sheet&cplk=ZDNlZDc0MzIxNw==" target="_blank" class="w-10 h-10 bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 rounded-full flex items-center justify-center hover:opacity-90 transition shadow" title="Instagram">
+                        <i class="fa-brands fa-instagram text-white text-base"></i>
+                    </a>
+                   <a href="https://www.tiktok.com/@mac.agencia.inmobiliaria?is_from_webapp=1&sender_device=pc" target="_blank" class="w-10 h-10 bg-black border border-gray-700 rounded-full flex items-center justify-center hover:bg-gray-900 transition shadow" title="TikTok">
+                        <i class="fa-brands fa-tiktok text-white text-base"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61580779925332&locale=es_LA" target="_blank" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-500 transition shadow" title="Facebook">
+                        <i class="fa-brands fa-facebook-f text-white text-base"></i>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-amber-400 mb-4 uppercase text-xs tracking-wider">Enlaces Rápidos</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><button onclick="switchPage('inicio')" class="hover:text-white transition text-left">Inicio</button></li>
+                    <li><button onclick="switchPage('nosotros')" class="hover:text-white transition text-left">Nosotros y Consultoría</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-amber-400 mb-4 uppercase text-xs tracking-wider">Distritos Principales</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li>Miraflores & San Isidro</li>
+                    <li>San Borja & La Molina</li>
+                    <li>Santiago de Surco & Barranco</li>
+                    <li>Cercado de Lima & Jesús María</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-amber-400 mb-4 uppercase text-xs tracking-wider">Boletín Inmobiliario</h4>
+                <p class="text-gray-400 text-sm mb-4">Recibe nuevas oportunidades de alquiler y venta en tu correo.</p>
+                <div class="flex">
+                    <input type="email" placeholder="Tu correo..." class="bg-blue-900 text-white px-4 py-2 rounded-l-lg text-sm outline-none w-full">
+                    <button onclick="alert('¡Gracias por suscribirte al boletín de MAX Inmobiliaria!')" class="bg-blue-600 px-4 py-2 rounded-r-lg font-bold text-sm hover:bg-blue-500 transition">OK</button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto border-t border-blue-900 pt-6 text-center text-xs text-gray-500">
+            © 2026 MAX Inmobiliaria S.A.C. Todos los derechos reservados. Lima, Perú.
+        </div>
+    </footer>
+
+    <!-- LÓGICA INTERACTIVA CON PAGINACIÓN DE 6 EN 6 -->
+    <script>
+        let paginaActual = 1;
+        const porPagina = 6;
+        let tarjetasFiltradas = [];
+
+        function switchPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('section-' + pageId).classList.add('active');
+            
+            if(pageId === 'inicio') {
+                document.getElementById('nav-inicio').className = "text-blue-600 font-semibold border-b-2 border-blue-600 pb-1 transition";
+                document.getElementById('nav-nosotros').className = "text-gray-600 hover:text-blue-600 transition";
+            } else {
+                document.getElementById('nav-nosotros').className = "text-blue-600 font-semibold border-b-2 border-blue-600 pb-1 transition";
+                document.getElementById('nav-inicio').className = "text-gray-600 hover:text-blue-600 transition";
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToSection(id) {
+            setTimeout(() => {
+                document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        function validarSoloNumeros(input) {
+            input.value = input.value.replace(/[^0-9]/g, '');
+        }
+
+        function validarSoloLetras(input) {
+            input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+        }
+
+        function calcularHipoteca() {
+            let monto = parseFloat(document.getElementById('montoInmueble').value) || 0;
+            let inicialPct = parseFloat(document.getElementById('cuotaInicial').value) / 100 || 0;
+            let anios = parseInt(document.getElementById('plazoAnios').value);
+            
+            let prestamo = monto * (1 - inicialPct);
+            let tasaMensual = 0.095 / 12;
+            let meses = anios * 12;
+
+            if(prestamo <= 0 || meses <= 0) {
+                document.getElementById('resultadoCuota').innerText = "$ 0.00";
+                return;
+            }
+
+            let cuota = (prestamo * tasaMensual * Math.pow(1 + tasaMensual, meses)) / (Math.pow(1 + tasaMensual, meses) - 1);
+            document.getElementById('resultadoCuota').innerText = "$ " + cuota.toFixed(2);
+        }
+
+        // BÚSQUEDA DINÁMICA Y PAGINACIÓN
+        function ejecutarBusqueda(cambiarPagina = 1) {
+            paginaActual = cambiarPagina;
+            let operacionFiltro = document.getElementById('filtroOperacion').value;
+            let distritoFiltro = document.getElementById('filtroDistrito').value;
+            let precioMaxFiltro = parseFloat(document.getElementById('filtroPrecio').value) || 999999;
+
+            let tarjetas = document.querySelectorAll('.propiedad-card');
+            tarjetasFiltradas = [];
+
+            tarjetas.forEach(card => {
+                let op = card.getAttribute('data-operacion');
+                let dist = card.getAttribute('data-distrito');
+                let prec = parseFloat(card.getAttribute('data-precio'));
+
+                let coincideOperacion = (operacionFiltro === 'todos' || op === operacionFiltro);
+                let coincideDistrito = (distritoFiltro === 'todos' || dist === distritoFiltro);
+                let coincidePrecio = (prec <= precioMaxFiltro);
+
+                if (coincideOperacion && coincideDistrito && coincidePrecio) {
+                    tarjetasFiltradas.push(card);
+                }
+                card.style.display = 'none'; // Ocultamos todas inicialmente
+            });
+
+            let mensajeNoRes = document.getElementById('no-resultados');
+            let paginacionCont = document.getElementById('paginacion-container');
+
+            if (tarjetasFiltradas.length === 0) {
+                mensajeNoRes.classList.remove('hidden');
+                paginacionCont.innerHTML = '';
+            } else {
+                mensajeNoRes.classList.add('hidden');
+                
+                // Mostrar solo el bloque de 6 propiedades de la página actual
+                let inicio = (paginaActual - 1) * porPagina;
+                let fin = inicio + porPagina;
+                let paginadas = tarjetasFiltradas.slice(inicio, fin);
+
+                paginadas.forEach(card => {
+                    card.style.display = 'flex';
+                });
+
+                renderizarPaginacion();
+            }
+
+            document.getElementById('contenedor-propiedades').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderizarPaginacion() {
+            let totalPaginas = Math.ceil(tarjetasFiltradas.length / porPagina);
+            let contenedor = document.getElementById('paginacion-container');
+            contenedor.innerHTML = '';
+
+            if (totalPaginas <= 1) return;
+
+            // Botón Anterior / Izquierda (opcional, o directo con los números y la flecha derecha)
+            for (let i = 1; i <= totalPaginas; i++) {
+                let btn = document.createElement('button');
+                btn.innerText = i;
+                btn.className = `px-4 py-2 rounded-lg font-bold text-sm transition ${i === paginaActual ? 'bg-blue-600 text-white shadow' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`;
+                btn.onclick = () => ejecutarBusqueda(i);
+                contenedor.appendChild(btn);
+            }
+
+            // Botón Siguiente (>)
+            if (paginaActual < totalPaginas) {
+                let btnSiguiente = document.createElement('button');
+                btnSiguiente.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+                btnSiguiente.className = 'px-4 py-2 rounded-lg font-bold text-sm bg-gray-200 text-gray-700 hover:bg-gray-300 transition';
+                btnSiguiente.onclick = () => ejecutarBusqueda(paginaActual + 1);
+                contenedor.appendChild(btnSiguiente);
+            }
+        }
+
+        function abrirDetalle(propId) {
+            alert("Abriendo detalles y galería completa de: " + propId);
+        }
+
+        function enviarConsultoria(e) {
+            e.preventDefault();
+            let apellido = document.getElementById('consApellido').value;
+            let tel = document.getElementById('consTel').value;
+
+            let alerta = document.getElementById('alertaConsultoria');
+            alerta.innerText = "¡Estimado(a) " + apellido + ", su consultoría gratuita ha sido registrada! Lo contactaremos al " + tel + " pronto.";
+            alerta.classList.remove('hidden');
+            e.target.reset();
+        }
+
+        // Inicializar al cargar la página
+        calcularHipoteca();
+        ejecutarBusqueda(1);
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "20INMOBILIARIA",
+			"path": "."
+		},
+		{
+			"name": "fotos",
+			"path": "../leonardo,propiedades - copia/fotos"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "20INMOBILIARIA"
+	}
+}
